@@ -10,6 +10,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: string = 'HomePage';   //--aqui define qual será a pagina principal do aplicativo
+                                   // foi retirado da rootPage a variavel any é do tipo genérico que faz a variavel aceitar qualquer tipo de objeto
 
   pages: Array<{title: string, component: string}>;
 

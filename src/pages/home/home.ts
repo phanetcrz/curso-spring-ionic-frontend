@@ -20,6 +20,6 @@ export class HomePage {
 
   login(){
     //this.navCtrl.push('CategoriasPage');                             //--push é um metodo de empilamento de página que ao chamar uma pagina ela fica sobre a outra.
-    this.navCtrl.setRoot('CategoriasPage');
+    this.navCtrl.setRoot('CategoriasPage');                            //--  SetRoot navegação sem empilhar 
   }
 }

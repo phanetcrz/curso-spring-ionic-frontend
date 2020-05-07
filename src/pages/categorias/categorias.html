@@ -2,16 +2,24 @@
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name = "menu"> 
-
       </ion-icon>
-
-
     </button>
-
     <ion-title>Categorias</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-<p>Página de Categorias</p>
+  <ion-fab top right edge>
+    <button navPush="CartPage" ion-fab mini><ion-icon name="cart"></ion-icon></button>
+  </ion-fab>
+  
+  <ion-list>                 <!-- let é um for que vai percorre a lista "items" e o "item" é o apelido -->
+    <button ion-item *ngFor="let item of items" (click)="showProdutos(item.id)">  <!--let *ngfor é uma diretiva do angular que é capaz de ler uma coleção do controlador ".ts" e repetir o elemento aonde ela está tantas vezes for o elemento daquela coleção -->
+      <ion-thumbnail item-start>
+        <img src="{{bucketUrl}}/cat{{item.id}}.jpg">
+      </ion-thumbnail>
+      <h2> {{ item.nome }} </h2> <!-- {{interpolação pelo angular}} assim você consegue chamar os atributos da categoriaDTO-->
+    </button>
+  </ion-list>
+
 </ion-content>

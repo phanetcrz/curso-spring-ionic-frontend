@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CategoriaService } from '../services/domain/categoria.service';
+import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CategoriaService } from '../services/domain/categoria.service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CategoriaService //--o serviço categoria service foi criado no módulo principal por ser um serviço que pode ser utilizado em mais de uma página.
+    CategoriaService, //--o serviço categoria service foi criado no módulo principal por ser um serviço que pode ser utilizado em mais de uma página.
+    ErrorInterceptorProvider
   ]
 })
 export class AppModule {}

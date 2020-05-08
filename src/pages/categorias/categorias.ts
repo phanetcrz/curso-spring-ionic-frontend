@@ -36,8 +36,6 @@ export class CategoriasPage {
       
       //console.log(response) //-- dentro dele, terá que usar uma função "callback" para ser executada quando a resposta chegar    
     }, //caso a requisição der erro 
-    error =>{
-      console.log(error)
-    });   
+    error =>{});   
   }
 }

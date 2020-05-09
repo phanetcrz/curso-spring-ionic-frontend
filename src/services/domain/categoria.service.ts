@@ -6,7 +6,7 @@ import { Observable } from "rxjs/Rx";
 
 
 
-@Injectable()    //-- para que seja um seriço que possa ver injetado em outras classes usa-se essa variavel
+@Injectable()    //-- para que CategoriaService seja um seriço que possa ver injetado em outras classes usa-se essa variavel
 export class CategoriaService{
     constructor(public http: HttpClient ){
     }

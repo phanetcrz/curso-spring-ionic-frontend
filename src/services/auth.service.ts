@@ -4,14 +4,18 @@ import { CredenciaisDTO } from "../models/credenciais.dto";
 import { API_CONFIG } from "../config/api.config";
 import { LocalUser } from "../models/local_users";
 import { StorageService } from "./storage.service";
-import { UrlSerializer } from "ionic-angular";
+import {JwtHelper} from 'angular2-jwt';
+
+type NewType = JwtHelper;
 
 @Injectable() //-- para que CategoriaService seja um seriço que possa ver injetado em outras classes usa-se essa variavel
 export class AuthService {
     
+    jwtHelper: NewType = new JwtHelper(); ///--utilizado para extrair um valor do token, que nesse caso é o email
+
     constructor(public http: HttpClient, public storage: StorageService){
-    }
-    
+    }      
+
     authenticate(creds : CredenciaisDTO) {
         return this.http.post(
             `${API_CONFIG.baseUrl}/login`, 
@@ -25,7 +29,8 @@ export class AuthService {
     successfulLogin(authorizationValue : String){
         let tok = authorizationValue.substring(7);
         let user : LocalUser = {
-            token: tok
+            token: tok,
+            email: this.jwtHelper.decodeToken(tok).sub     //-- esse comando faz pegar o email do token
         }; 
         
         this.storage.setLocalUser(user);    
@@ -35,3 +40,15 @@ export class AuthService {
         this.storage.setLocalUser(null);
     }
 }
+/* solução para o erro de dependencia por causa da versão do angula, foi preciso fazer o procedumento de atualização da versão e depois atualizar o angular/http, coforme abaixo:
+npm install @angular/core@5.2.3 --save
+
+
+Basta pressionar o prompt de comando, vá para a pasta do projeto e execute
+
+npm install @angular/http@latest
+Se houver alguma gravidade encontrada, como algumas vezes é exibida após a instalação, basta usar
+
+npm audit fix
+
+ */

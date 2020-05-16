@@ -11,6 +11,7 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ClienteService } from '../services/domain/cliente.service';
+import { authInterceptorProvider } from '../interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ClienteService } from '../services/domain/cliente.service';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CategoriaService, //--o serviço categoria service foi criado no módulo principal por ser um serviço que pode ser utilizado em mais de uma página.
+    authInterceptorProvider,
     ErrorInterceptorProvider,
     AuthService,
     StorageService,

@@ -15,14 +15,8 @@ export class ClienteService{
         return this.http.get(`${API_CONFIG.baseUrl}/clientes/${id}`);
     }
         
-    findByEmail(email: String) : Observable<ClienteDTO>{
-
-        let token = this.storage.getLocalUser().token;   //coletando o token do localStorage e usando para acessar o cabeçalho
-        let authHeader = new HttpHeaders({'Authorization': 'Bearer ' + token});
-   
-        return this.http.get<ClienteDTO>(
-            `${API_CONFIG.baseUrl}/clientes/email?value=${email}`,
-            {'headers': authHeader}); //-- com isso passa o cabeçalho para a requisição            
+    findByEmail(email: String) : Observable<ClienteDTO>{   
+        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`); 
     }
     
     getImageFromBucket(id : string) : Observable<any> {  //--coletando a imagem do cliente lá no bucket do amazon

@@ -28,7 +28,14 @@ export class ProfilePage {
           this.cliente = response;  
           this.getImageIfExists();
         },
-          error => {});
+          error => {
+            if (error.status==403){
+              this.navCtrl.setRoot('HomePage');
+            }    
+          });
+    }
+    else{ //--caso ocorra algum problema na hora de obter o token no localUser, ele redireciona para a página home
+      this.navCtrl.setRoot('HomePage'); //--comando para chamar a página homePage
     }
   }
 

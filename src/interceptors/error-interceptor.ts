@@ -29,44 +29,63 @@ export class ErrorInterceptor implements HttpInterceptor {
             console.log(errorObj);
 
             switch(errorObj.status) {
-           //     case 401:
-           //     this.handle401();
-           //     break;
-
-                case 403:
+                case 401:           //-- Erro de Autenticação   tratamento com alert's referencia https://ionicframework.com/docs/api/alert
+                this.handle401();
+                break;
+        
+                case 403:           //-- O Erro 403 Acesso negado/proibido indica que seu servidor está funcionando, mas você não possui mais permissão para visualizar todo ou partes do seu site por algum motivo.
                 this.handle403();
                 break;
+
+                case 404:
+                this.handle404();
+                break
 
              //   case 422:
              //   this.handle422(errorObj);
              //   break;
 
-             //   default:
-              //  this.handleDefaultEror(errorObj);           
+                default:
+                this.handleDefaultEror(errorObj);           
             }    
 
             return Observable.throw(errorObj);
         }) as any;
     }
-
-    handle403() {
-        this.storage.setLocalUser(null);  //--caso um localUser esteja inválido, essa função remove deixando nulo
-    }
-
-    /*handle401() {
+    
+    handle401() {
         let alert = this.alertCtrl.create({
             title: 'Erro 401: falha de autenticação',
             message: 'Email ou senha incorretos',
-            enableBackdropDismiss: false,
+            enableBackdropDismiss: false, //-- faz com na hora de sair, tem que apertar no botão do alert e não fora dele.
             buttons: [
                 {
                     text: 'Ok'
                 }
             ]
         });
-        alert.present();
+        alert.present();   ///-- apresenta o alert para o usuário
     }
 
+    handle403() {
+        this.storage.setLocalUser(null);  //--caso um localUser esteja inválido, essa função remove deixando nulo
+    }
+
+    handle404() {
+        let alert = this.alertCtrl.create({
+            title: 'Erro 404: Não encontrada',
+            message: 'Página não encontrada',
+            enableBackdropDismiss: false, //-- faz com na hora de sair, tem que apertar no botão do alert e não fora dele.
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+            ]
+        });
+        alert.present();   ///-- apresenta o alert para o usuário
+    }    
+
+/*
     handle422(errorObj) {
         let alert = this.alertCtrl.create({
             title: 'Erro 422: Validação',
@@ -79,9 +98,9 @@ export class ErrorInterceptor implements HttpInterceptor {
             ]
         });
         alert.present();
-    }
+    }*/
 
-    handleDefaultEror(errorObj) {
+    handleDefaultEror(errorObj) {   //-- tratamento para qualquer erro diferente de 401, 422, 403
         let alert = this.alertCtrl.create({
             title: 'Erro ' + errorObj.status + ': ' + errorObj.error,
             message: errorObj.message,

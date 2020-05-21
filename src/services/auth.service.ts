@@ -26,6 +26,16 @@ export class AuthService {
             });
     }  
 
+    refreshToken() {
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refresh_token`, 
+            {},
+            {
+                observe: 'response', //--porque terá que pegar o header da reposta, pois a requisição vai retornar um objeto do tipo resposta tenho acesso ao header
+                responseType: 'text' // que será um text e não um json, pois o endpoin de login retorna uma resposta de corpo vazio, pois colocando como texto o framework não tente fazer um parce(conversão) para Json
+            });
+    }  
+
     successfulLogin(authorizationValue : String){
         let tok = authorizationValue.substring(7);
         let user : LocalUser = {

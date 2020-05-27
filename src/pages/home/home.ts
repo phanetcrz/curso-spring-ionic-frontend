@@ -46,4 +46,8 @@ export class HomePage {
       },
       error => {});    
   }
+
+  signup(){
+    this.navCtrl.push('SignupPage');    // push enpilha a página deixando uma setinha para voltar
+  }
 }

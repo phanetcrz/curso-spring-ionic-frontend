@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -8,6 +8,34 @@ import { FormGroup } from '@angular/forms';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
+
+  formGroup: FormGroup;  //-- é um objeto do angular reacjForms ajuda a controlar o formulário, fazendo validações 
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public formBuilder: FormBuilder) {  //-- quando faz uso de um FormGroup é necessário importar um componente formBuilder
+
+    //--instanciar um formGroup você chama um formBuilder.group que é responsável pela instanciação 
+    this.formGroup = this.formBuilder.group({
+      //mesmo atributo que tem no formulário signup.html
+      nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
+      email: ['joaquim@gmail.com', [Validators.required, Validators.email]],
+      tipo : ['1', [Validators.required]],
+      cpfOuCnpj : ['06134596280', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
+      senha : ['123', [Validators.required]],
+      logradouro : ['Rua Via', [Validators.required]],
+      numero : ['25', [Validators.required]],
+      complemento : ['Apto 3', []],
+      bairro : ['Copacabana', []],
+      cep : ['10828333', [Validators.required]],
+      telefone1 : ['977261827', [Validators.required]],
+      telefone2 : ['', []],
+      telefone3 : ['', []],
+      estadoId : [null, [Validators.required]],
+      cidadeId : [null, [Validators.required]]    
+    });   
+  }
 
   signupUser(){
     console.log("Cadastrou");

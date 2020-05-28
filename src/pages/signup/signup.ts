@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { EstadoService } from '../../services/domain/estado.service';
+import { CidadeService } from '../../services/domain/cidade.service';
+import { EstadoDTO } from '../../models/estado.dto';
+import { CidadeDTO } from '../../models/cidade.dto';
 
 @IonicPage()
 @Component({
@@ -10,11 +14,15 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class SignupPage {
 
   formGroup: FormGroup;  //-- é um objeto do angular reacjForms ajuda a controlar o formulário, fazendo validações 
+  estados: EstadoDTO[];
+  cidades: CidadeDTO[];
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public formBuilder: FormBuilder) {  //-- quando faz uso de um FormGroup é necessário importar um componente formBuilder
+    public formBuilder: FormBuilder, //-- quando faz uso de um FormGroup é necessário importar um componente formBuilder
+    public cidadeService: CidadeService,
+    public estadoService: EstadoService) {  
 
     //--instanciar um formGroup você chama um formBuilder.group que é responsável pela instanciação 
     this.formGroup = this.formBuilder.group({
@@ -37,6 +45,27 @@ export class SignupPage {
     });   
   }
 
+  ionViewDidLoad(){
+    this.estadoService.findAll()
+      .subscribe(response => {
+        this.estados = response; //aqui está dando um binding no objeto estadoDTO
+        this.formGroup.controls.estadoId.setValue(this.estados[0].id); //pega o primeiro elemento da lista e atribui na lista de estadoId do formulário 
+
+        this.updateCidades();  //faz a busca da cidade referente ao estado selecionado acima
+      },
+      error => {}); //está fazio, mas poder ser utilizado para futuros tratamentos de erros  
+  }
+
+  updateCidades(){
+    let estado_id = this.formGroup.value.estadoId; // pega o id do estado que foi selecionao lá na lista htmp do formulário
+    this.cidadeService.findAll(estado_id)
+      .subscribe(response => {   //--vou me inscrever para ter a responsa 
+        this.cidades = response;  //-- se a resposta vir com sucesso mandos dados para o objeto cidadesDto
+        this.formGroup.controls.cidadeId.setValue(null);// Tira a seleção da caixa de cidades
+      },
+      error => {}); //está fazio, mas poder ser utilizado para futuros tratamentos de erros 
+  }
+  
   signupUser(){
     console.log("Cadastrou");
   }

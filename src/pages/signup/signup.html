@@ -4,16 +4,18 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding> <!-- colocando [formGroup] vc faz o bindind de atributo formGroup com o formulário html  -->>
+<ion-content padding> <!-- colocando [formGroup] vc faz o bindind de atributo formGroup com o formulário html  -->
   <form [formGroup]="formGroup" (ngSubmit)="signupUser(); $event.preventDefault()">  <!--event.preventDefault previve da pagina ser enviada e assim controlada na mão-->
     <ion-item>
       <ion-label stacked>Nome*</ion-label>
       <ion-input formControlName="nome" type="text"></ion-input>   <!-- o bindings nesse caso será diferente do [(ngModel)], aqui é de forma particular batando trocar no name para formControlName   -->>
-    </ion-item>
-    <ion-item>
+    </ion-item>  <!--Abaixo foi utilizado o *ngif que é o if("se") condicional  e o .errors pega a validação lá do Validator do signup.ts      -->
+    <p class="danger" *ngIf="formGroup.controls['nome'].dirty && formGroup.controls['nome'].errors" margin-left>Valor inválido</p> <!--A validação é sempre abaixo do ion-item-->
+    <ion-item>                          <!-- dirty = sujo, verifica se o campo foi mexido, verifica se o usuário digitou e depois apagou -->
       <ion-label stacked>Email*</ion-label>
       <ion-input formControlName="email" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['email'].dirty && formGroup.controls['email'].errors" margin-left>Valor inválido</p> <!--A validação é sempre abaixo do ion-item-->
     <ion-list radio-group name="tipo">
       <ion-list-header>
         Tipo de cliente
@@ -27,23 +29,26 @@
         <ion-radio value="2"></ion-radio>
       </ion-item>
     </ion-list>
-
     <ion-item>
       <ion-label stacked>CPF ou CNPJ</ion-label>
       <ion-input formControlName="cpfOuCnpj" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['cpfOuCnpj'].dirty && formGroup.controls['cpfOuCnpj'].errors" margin-left>Valor inválido</p> <!--A validação é sempre abaixo do ion-item-->
     <ion-item>
       <ion-label stacked>Senha*</ion-label>
       <ion-input formControlName="senha" type="password"></ion-input>
     </ion-item> 
+    <p class="danger" *ngIf="formGroup.controls['senha'].dirty && formGroup.controls['senha'].errors" margin-left>Valor inválido</p> <!--A validação é sempre abaixo do ion-item-->
     <ion-item>
       <ion-label stacked>Logradouro*</ion-label>
       <ion-input formControlName="logradouro" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['logradouro'].dirty && formGroup.controls['logradouro'].errors" margin-left>Valor inválido</p> <!--A validação é sempre abaixo do ion-item-->
     <ion-item>
       <ion-label stacked>Número*</ion-label>
       <ion-input formControlName="numero" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['numero'].dirty && formGroup.controls['numero'].errors" margin-left>Valor inválido</p> <!--A validação é sempre abaixo do ion-item-->
     <ion-item>
       <ion-label stacked>Complemento</ion-label>
       <ion-input formControlName="complemento" type="text"></ion-input>
@@ -56,10 +61,12 @@
       <ion-label stacked>CEP*</ion-label>
       <ion-input formControlName="cep" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['cep'].dirty && formGroup.controls['cep'].errors" margin-left>Valor inválido</p> <!--A validação é sempre abaixo do ion-item-->
     <ion-item>
       <ion-label stacked>Telefone 1*</ion-label>
       <ion-input formControlName="telefone1" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['telefone1'].dirty && formGroup.controls['telefone1'].errors" margin-left>Valor inválido</p> <!--A validação é sempre abaixo do ion-item-->
     <ion-item>
       <ion-label stacked>Telefone 2</ion-label>
       <ion-input formControlName="telefone2" type="text"></ion-input>
@@ -70,7 +77,7 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Estado*</ion-label>  <!--"ionChange" é o evento responsavel por atualizar as cidades apois selecionar um novo estado chamando o procedimento updateCidades -->>
-      <ion-select formControlName="estadoId" (ionChange)="updateCidades()">        <!-- "selected" e "first as f" força selecionar o primeiro item na caixa de seleção-->> 
+      <ion-select formControlName="estadoId" (ionChange)="updateCidades()">        <!-- "selected" e "first as f" força selecionar o primeiro item na caixa de seleção--> 
         <ion-option *ngFor="let estado of estados; first as f" [value]="estado.id" [selected]="f">{{estado.nome}}</ion-option>
       </ion-select>
     </ion-item>
@@ -79,7 +86,7 @@
       <ion-select formControlName="cidadeId">
         <ion-option *ngFor="let cidade of cidades" [value]="cidade.id">{{cidade.nome}}</ion-option>
       </ion-select>
-    </ion-item>
-    <button ion-button block type="submit">Criar conta</button>
+    </ion-item>                            <!--fica com o botão desabilitado enquando não validar todas as informações-->
+    <button ion-button block type="submit" [disabled]="formGroup.invalid" >Criar conta</button>
   </form>
 </ion-content>

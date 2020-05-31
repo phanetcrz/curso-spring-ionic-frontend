@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EstadoService } from '../../services/domain/estado.service';
 import { CidadeService } from '../../services/domain/cidade.service';
 import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
+import { ClienteService } from '../../services/domain/cliente.service';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,9 @@ export class SignupPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder, //-- quando faz uso de um FormGroup é necessário importar um componente formBuilder
     public cidadeService: CidadeService,
-    public estadoService: EstadoService) {  
+    public estadoService: EstadoService,
+    public clienteService: ClienteService,
+    public alertCtrl: AlertController) {  
 
     //--instanciar um formGroup você chama um formBuilder.group que é responsável pela instanciação 
     this.formGroup = this.formBuilder.group({
@@ -66,7 +69,31 @@ export class SignupPage {
       error => {}); //está fazio, mas poder ser utilizado para futuros tratamentos de erros 
   }
   
-  signupUser(){
-    console.log("Cadastrou");
+  signupUser(){   //--Procedure responsável pela inserção dos dados do cliente
+    //console.log(this.formGroup.value);    //---this.formGroup.value que contém os dados do formulário
+
+    this.clienteService.insert(this.formGroup.value)
+      .subscribe(Response => {
+        this.showInsertOk()  
+      },
+      error => {}); //está fazio, mas poder ser utilizado para futuros tratamentos de erros 
+  }
+
+  showInsertOk(){
+    let alert = this.alertCtrl.create({
+      title: 'Sucesso!'  ,
+      message: 'Cadastro efetuado com sucesso',
+      enableBackdropDismiss: false, //-- isso quer dizer que só sai do alert clicando no botão
+      buttons:  [
+        {
+          text: 'Ok',
+          handler:  () =>{  //-- handler:() = representa uma função anonima para ser executada no clique no botão
+            this.navCtrl.pop(); //-- pop função para desempilhar a pagina
+
+          }
+        }
+      ]
+    })
+    alert.present(); //-- função para apresentar o alert na tela
   }
 }

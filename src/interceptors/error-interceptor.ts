@@ -3,7 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 import { Observable } from 'rxjs/Rx'; // IMPORTANTE: IMPORT ATUALIZADO
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { StorageService } from '../services/storage.service';
-//import { FieldMessage } from '../models/fieldmessage';
+import { FieldMessage } from '../models/fieldmessage';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -41,9 +41,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.handle404();
                 break
 
-             //   case 422:
-             //   this.handle422(errorObj);
-             //   break;
+                case 422:           //--erro de validação de dados
+                this.handle422(errorObj);
+                break;
 
                 default:
                 this.handleDefaultEror(errorObj);           
@@ -85,7 +85,6 @@ export class ErrorInterceptor implements HttpInterceptor {
         alert.present();   ///-- apresenta o alert para o usuário
     }    
 
-/*
     handle422(errorObj) {
         let alert = this.alertCtrl.create({
             title: 'Erro 422: Validação',
@@ -98,7 +97,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             ]
         });
         alert.present();
-    }*/
+    }
 
     handleDefaultEror(errorObj) {   //-- tratamento para qualquer erro diferente de 401, 422, 403
         let alert = this.alertCtrl.create({
@@ -114,13 +113,13 @@ export class ErrorInterceptor implements HttpInterceptor {
         alert.present();        
     }
 
-  /*  private listErrors(messages : FieldMessage[]) : string {
+    private listErrors(messages : FieldMessage[]) : string {
         let s : string = '';
         for (var i=0; i<messages.length; i++) {
             s = s + '<p><strong>' + messages[i].fieldName + "</strong>: " + messages[i].message + '</p>';
         }
         return s;
-    }*/
+    }
 }
 
 export const ErrorInterceptorProvider = {   //-- É exigência do frameword a declaração do provider do interceptor 

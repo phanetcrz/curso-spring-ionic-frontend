@@ -39,7 +39,9 @@ export class CategoriasPage {
     error =>{});   
   }
 
-  showProdutos(){
-    this.navCtrl.push('ProdutosPage');
+  showProdutos(categoria_id : string){  //poderia ser cat : categoria_id, porem deixou o mesmo nome para fica parametrizado
+    this.navCtrl.push('ProdutosPage', {categoria_id: categoria_id}); //-- forma de passar um valor de parametrso por página, basta incluir um valor no método e 
+                                                                     //-- incluir o valor na forma de objeto {} 
+                                                                        
   }
 }

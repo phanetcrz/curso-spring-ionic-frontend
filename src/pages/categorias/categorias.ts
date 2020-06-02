@@ -38,4 +38,8 @@ export class CategoriasPage {
     }, //caso a requisição der erro 
     error =>{});   
   }
+
+  showProdutos(){
+    this.navCtrl.push('ProdutosPage');
+  }
 }

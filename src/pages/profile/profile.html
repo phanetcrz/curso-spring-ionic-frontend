@@ -12,7 +12,7 @@
   <ion-avatar>
     <img class="circle" [src]="cliente?.imageUrl || 'assets/imgs/avatar-blank.png'">
   </ion-avatar>
-  <h2 text-center>{{cliente?.nome}}</h2>
+  <h2 text-center>{{cliente?.nome}}</h2>   <!--usa interrogação para que o registro não se torna obrigatório não dando erro para o usuário, que é operador de operação segura -->
   <p text-center>{{cliente?.email}}</p>
 
 </ion-content>

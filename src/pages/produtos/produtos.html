@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-list>   <!--Criado uma lista para listar os produtos-->
-    <button ion-item *ngFor="let item of items" (click)="showDetail()"> <!--items virá de uma lista ProdutoDTO-->
+    <button ion-item *ngFor="let item of items" (click)="showDetail(item.id)"> <!--items virá de uma lista ProdutoDTO-->
       <ion-thumbnail item-start>
         <img [src]="item.imageUrl || 'assets/imgs/prod.jpg'">  <!--Aqui tem uma condição de Exibir uma imagem do produto ou uma imagem estática(fixa) imagem padrão quando o produto não tem foto-->
       </ion-thumbnail>

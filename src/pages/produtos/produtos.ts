@@ -24,7 +24,7 @@ export class ProdutosPage {
     this.produtoService.findByCategoria(categoria_id)
       .subscribe(response => {           //--response paginado
         this.items = response['content'];//--nesse caso, o formato Json está dentro do content
-        this.loadImageUrls();
+        this.loadImageUrls();  //--Chama o método para carregar as url das imagens
       },
       error =>{});  
   };
@@ -40,8 +40,8 @@ export class ProdutosPage {
     }
   }   
   
-  showDetail(){
-    this.navCtrl.push('ProdutoDetailPage');
+  showDetail(produto_id : String){
+    this.navCtrl.push('ProdutoDetailPage', {produto_id : produto_id});  //Passando o id na abertura da página
   }
 
 }

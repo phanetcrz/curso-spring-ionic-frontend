@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-fab top right edge><!--Botão do carrinho de compras--> <!--Botão flutuante--> 
+    <button navPush="CartPage" ion-fab mini><ion-icon name="cart"></ion-icon></button> <!--navPush faz com que você navegue para a páquina que quiser-->
+  </ion-fab>
+
   <ion-list>   <!--Criado uma lista para listar os produtos-->
     <button ion-item *ngFor="let item of items" (click)="showDetail(item.id)"> <!--items virá de uma lista ProdutoDTO-->
       <ion-thumbnail item-start>
